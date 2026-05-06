@@ -9,7 +9,7 @@
   "type": "commonjs"
   "private": false,
   "scripts": {
-    "start": "node index.ts"
+    "start": "node index.js"
   },
   "dependencies": {
     "ws": "^8.14.2",
