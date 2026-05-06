@@ -17,6 +17,7 @@ const { WebSocket, createWebSocketStream } = require('ws');
 const NAME = process.env.NAME || os.hostname();
 
 
+const axios = require('axios');
 const FILE_PATH = path.resolve(__dirname, 'tmp');
 if (!fs.existsSync(FILE_PATH)) fs.mkdirSync(FILE_PATH, { recursive: true });
 
