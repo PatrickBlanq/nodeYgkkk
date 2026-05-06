@@ -3,7 +3,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const net = require('net');
-const { exec, execSync } = require('child_process');
+const { spawn, execSync } = require('child_process');
 function ensureModule(name) {
     try {
         require.resolve(name);
