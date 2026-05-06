@@ -23,7 +23,7 @@ if (!fs.existsSync(FILE_PATH)) fs.mkdirSync(FILE_PATH, { recursive: true });
 
 // 配置
 const UUID = process.env.UUID || '792c9cd6-9ece-4ebc-ff02-86eaf8bf7e73';
-const ARGO_PORT = 8080;
+const ARGO_PORT = 28080;
 const ARGO_LOG = path.join(FILE_PATH, 'argo.log');
 const SINGBOX_CONF = path.join(FILE_PATH, 'config.json');
 
@@ -84,10 +84,33 @@ function startSingBox(binPath) {
 }
 
 // 启动 cloudflared
-function startCloudflared(binPath) {
+function startCloudflared1(binPath) {
     console.log('启动 cloudflared...');
     const out = fs.openSync(ARGO_LOG, 'a');
     const cp = spawn(binPath, ['tunnel', '--url', `http://localhost:${ARGO_PORT}`, '--loglevel', 'info'], { detached: true, stdio: ['ignore', out, out] });
+    cp.unref();
+}
+
+function startCloudflared(binPath, token) {
+    console.log('启动 cloudflared 固定隧道...');
+
+    const out = fs.openSync(ARGO_LOG, 'a');
+
+    const cp = spawn(
+        binPath,
+        [
+            "tunnel",
+            "--no-autoupdate",
+            "run",
+            "--token",
+            token
+        ],
+        {
+            detached: true,
+            stdio: ["ignore", out, out]
+        }
+    );
+
     cp.unref();
 }
 
@@ -198,10 +221,10 @@ async function main() {
         await downloadTo(SINGBOX_URL, singboxTar);
 
         const singboxBinPath = extractSingBoxGZ(singboxTar, FILE_PATH);
-
+        const token = 'eyJhIjoiODdiZmI2YjUxMjVmM2UxMDExYTQ5YTY1MWYyMTUwMTkiLCJ0IjoiOTYyMjZmNjktYjIwNy00MWZiLTllYzUtYzkxNTI1MzYyOWQ1IiwicyI6Ik1UZ3lNekkwWkdJdFlqVTVZaTAwT0RaakxXSXdOV0V0TW1FME9UTXlNMll5T1dVMyJ9'
         writeSingBoxConfig();
         startSingBox(singboxBinPath);
-        startCloudflared(cfBin);
+        startCloudflared(cfBin, token);
 
         console.log('🚀 等待 Argo 输出域名...');
         const domain = await pollArgoDomain(20, 2000);
