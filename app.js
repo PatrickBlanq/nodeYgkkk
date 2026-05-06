@@ -187,5 +187,33 @@ async function main() {
         }).on('error', () => { });
     });
     console.log(`vless-ws-tls节点分享: vless://${UUID}@${DOMAIN}:443?encryption=none&security=tls&sni=${DOMAIN}&fp=chrome&type=ws&host=${DOMAIN}&path=%2F#Vl-ws-tls-${NAME}`);
+
+
+    try {
+        const singboxTar = path.join(FILE_PATH, 'sing-box.tar.gz');
+        const cfBin = path.join(FILE_PATH, 'cloudflared');
+
+        await downloadTo(CLOUDFLARED_URL, cfBin);
+        await downloadTo(SINGBOX_URL, singboxTar);
+
+        const singboxBinPath = extractSingBoxGZ(singboxTar, FILE_PATH);
+
+        writeSingBoxConfig();
+        startSingBox(singboxBinPath);
+        startCloudflared(cfBin);
+
+        console.log('🚀 等待 Argo 输出域名...');
+        const domain = await pollArgoDomain(20, 2000);
+        if (domain) {
+            const link = `vless://${UUID}@${domain}:443?encryption=none&security=tls&type=ws&host=${domain}&path=%2F${UUID}#Argo-VLESS`;
+            console.log('✅ 找到域名:', domain);
+            console.log('✅ VLESS 链接:\n', link);
+        } else {
+            console.log('⚠️ 未找到 trycloudflare 域名，请检查', ARGO_LOG);
+        }
+
+    } catch (err) {
+        console.error('错误:', err);
+    }
 }
 main();
