@@ -6,6 +6,7 @@
   "author": "eooce",
   "repository": "eooce",
   "license": "MIT",
+  "type": "commonjs"
   "private": false,
   "scripts": {
     "start": "node app.js"
