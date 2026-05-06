@@ -49,7 +49,7 @@ function extractSingBoxGZ(tarPath, dest) {
     console.log('解压完成', tarPath);
 
     // 移动 sing-box 到 tmp/sing-box
-    const extractedDir = fs.readdirSync(dest).find(d => d.endsWith('sing-box'));
+    const extractedDir = fs.readdirSync(dest).find(d => d.startsWith('sing-box-'));
     const oldBin = path.join(dest, extractedDir, 'sing-box');
     console.log('sing-box在目录：', oldBin);
     const newBin = path.join(dest, 'sing-box');
