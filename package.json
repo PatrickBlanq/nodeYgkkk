@@ -6,7 +6,7 @@
   "author": "eooce",
   "repository": "eooce",
   "license": "MIT",
-  "type": "commonjs"
+  "type": "commonjs",
   "private": false,
   "scripts": {
     "start": "node home.js"
