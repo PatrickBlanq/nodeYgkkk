@@ -240,6 +240,6 @@ async function main() {
     } catch (err) {
         console.error('错误:', err);
     }
-
+setInterval(() => {}, 1000);
 }
 main();
