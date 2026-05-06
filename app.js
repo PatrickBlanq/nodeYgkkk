@@ -101,6 +101,7 @@ function startCloudflared(binPath, token) {
         [
             "tunnel",
             "--no-autoupdate",
+            "--loglevel", "debug",   // ⭐ 输出更多日志
             "run",
             "--token",
             token
@@ -239,5 +240,6 @@ async function main() {
     } catch (err) {
         console.error('错误:', err);
     }
+
 }
 main();
