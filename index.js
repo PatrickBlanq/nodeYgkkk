@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get("/", async (req, res) => {
     try {
-        const r = await fetch("https://你的目标地址");
+        const r = await fetch("https://baidu.com");
         const text = await r.text();
         res.send("<pre>" + text + "</pre>");
     } catch (e) {
