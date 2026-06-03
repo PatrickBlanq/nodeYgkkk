@@ -9,6 +9,7 @@
   "type": "commonjs",
   "private": false,
   "scripts": {
+    "build": "npm install",
     "start": "node index.js"
   },
   "dependencies": {
