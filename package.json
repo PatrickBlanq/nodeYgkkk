@@ -2,7 +2,7 @@
   "name": "sb-nodejs",
   "version": "1.0.0",
   "description": "Node.js Server",
-  "main": "app.js",
+  "main": "index.js",
   "author": "eooce",
   "repository": "eooce",
   "license": "MIT",
