@@ -1,15 +1,18 @@
-const http = require('http');
+import express from "express";
 
-const PORT = process.env.Port || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => {
-    res.writeHead(200, {
-        'Content-Type': 'text/plain; charset=utf-8'
-    });
+app.get("/", async (req, res) => {
+    try {
 
-    res.end('Hello Shiper!\n');
+        const text = "await r.text()";
+        res.send("<pre>" + text + "</pre>");
+    } catch (e) {
+        res.send("错误：" + e.toString());
+    }
 });
 
-server.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => {
+    console.log("Server running on port " + PORT);
 });
