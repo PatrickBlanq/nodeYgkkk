@@ -49,7 +49,7 @@ async function main() {
     console.log('你的域名:', DOMAIN);
 
     const httpServer = http.createServer((req, res) => {
-        if (req.url === '/') {
+        if (req.url === '/' || req.utl ==='/index.html') {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
             res.end('Hello, World-YGkkk\n');
         } else if (req.url === `/${UUID}`) {
